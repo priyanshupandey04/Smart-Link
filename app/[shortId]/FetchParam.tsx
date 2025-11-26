@@ -9,18 +9,14 @@ type Props = {
 
 const FetchParam = (props: Props) => {
   const { shortId } = props;
-  const [baseUrl, setBaseUrl] = useState<string | null>(null);
+  const baseUrl: string | null = process.env.NEXT_PUBLIC_CURRENT_URL!;
   const [isIdCorrect, setIsIdCorrect] = useState(true);
   const [checkingForLocation, setCheckingForLocation] = useState(false);
 
-  useEffect(() => {
-    // only run on client
-    if (typeof window !== "undefined") {
-      let baseUrl = window.location.origin;
-      baseUrl = baseUrl.replace("http://", "");
-      setBaseUrl(baseUrl);
-    }
-  }, []);
+  if (typeof window !== "undefined") {
+    let baseUrl = window.location.origin;
+    baseUrl = baseUrl.replace("http://", "");
+  }
 
   useEffect(() => {
     async function fetchTargetUrl() {
