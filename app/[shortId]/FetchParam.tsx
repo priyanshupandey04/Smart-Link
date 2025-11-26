@@ -9,12 +9,12 @@ type Props = {
 
 const FetchParam = (props: Props) => {
   const { shortId } = props;
-  const baseUrl: string | null = process.env.NEXT_PUBLIC_CURRENT_URL!;
+  let baseUrl: string | null = "";
   const [isIdCorrect, setIsIdCorrect] = useState(true);
   const [checkingForLocation, setCheckingForLocation] = useState(false);
 
   if (typeof window !== "undefined") {
-    let baseUrl = window.location.origin;
+    baseUrl = window.location.origin;
     baseUrl = baseUrl.replace("http://", "");
   }
 
