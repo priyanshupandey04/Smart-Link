@@ -81,8 +81,23 @@ export async function PUT(req: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (e) {
-    console.log(e);
-    return NextResponse.json({ error: e }, { status: 500 });
+  } catch (e: unknown) {
+    // Narrow unknown to extract message and meta safely
+    let message = "Unknown error";
+    let meta: any = undefined;
+    if (typeof e === "object" && e !== null) {
+      if ("message" in e && typeof (e as any).message === "string") {
+        message = (e as any).message;
+      }
+      if ("meta" in e) {
+        meta = (e as any).meta;
+      }
+    } else if (typeof e === "string") {
+      message = e;
+    }
+
+    console.error("Prisma error:", message);
+    console.error("Prisma meta:", meta);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
