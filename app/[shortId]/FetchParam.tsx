@@ -50,7 +50,7 @@ const FetchParam = (props: Props) => {
         }
       } catch (err) {
         console.error("Redirect API fetch failed:", err);
-        if ((err as any).message === "Password required") {
+        if ((err as { message: string }).message === "Password required") {
           redirect(`/p/${shortId}`);
         }
       }
@@ -83,7 +83,9 @@ const FetchParam = (props: Props) => {
         navigator.sendBeacon(beaconUrl, blob);
       }
 
-      const success = async (pos: any) => {
+      const success = async (pos: {
+        coords: { latitude: number; longitude: number; accuracy: number };
+      }) => {
         console.log("📍 User Location:", {
           lat: pos.coords.latitude,
           lon: pos.coords.longitude,

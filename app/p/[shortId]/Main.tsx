@@ -20,8 +20,11 @@ const Main = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   // ✅ rewritten: no stale state read, returns result explicitly
-  async function fetchTargetUrl(): Promise<{ targetUrl: string | null; error: string | null }> {
-    let urlApi = shortId.endsWith("_")
+  async function fetchTargetUrl(): Promise<{
+    targetUrl: string | null;
+    error: string | null;
+  }> {
+    const urlApi = shortId.endsWith("_")
       ? `${baseUrl}/api/getUrl/withSlug`
       : `${baseUrl}/api/getUrl/withoutSlug`;
 
@@ -54,12 +57,12 @@ const Main = (props: Props) => {
       } else if (json.error) {
         throw new Error(json.error);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       let errMsg = null;
 
-      if (err.message === "Wrong password") {
+      if (err instanceof Error && err.message === "Wrong password") {
         errMsg = "Wrong password!! Try again.";
-      } else if (err.message === "Password required") {
+      } else if (err instanceof Error && err.message === "Password required") {
         errMsg = "Password required!! Enter password.";
       }
 
@@ -103,14 +106,18 @@ const Main = (props: Props) => {
     // helper to send lat/lon via beacon
     function sendLocation(lat: number, lon: number) {
       const data = { latitude: lat, longitude: lon, id: shortId };
-      const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
+      const blob = new Blob([JSON.stringify(data)], {
+        type: "application/json",
+      });
       console.log("Sending blob:", blob);
       console.log("beaconUrl", beaconUrl);
       console.log("Sending beacon:", data);
       navigator.sendBeacon(beaconUrl, blob);
     }
 
-    const success = async (pos: any) => {
+    const success = async (pos: {
+      coords: { latitude: number; longitude: number; accuracy: number };
+    }) => {
       console.log("📍 User Location:", {
         lat: pos.coords.latitude,
         lon: pos.coords.longitude,

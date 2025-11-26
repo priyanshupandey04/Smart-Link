@@ -18,9 +18,7 @@ import CopyToclipBoard from "./CopyToclipBoard";
 import { encryptedPassword } from "@/lib/utils";
 import { DateTime } from "./DateTime";
 
-type Props = {};
-
-const Main = (props: Props) => {
+const Main = () => {
   const [isCustomizeActive, setIsCustomizeActive] = useState(false);
   const [isPasswordActive, setIsPasswordActive] = useState(false);
   const [isExpiryActive, setIsExpiryActive] = useState(false);
@@ -47,7 +45,7 @@ const Main = (props: Props) => {
     setCreatedSuccessfully(false);
     setShortId(null);
 
-    let isAllChecked: Boolean = false;
+    let isAllChecked: boolean = false;
 
     // Small delay for smoothness
     await new Promise((resolve) => setTimeout(resolve, 100));

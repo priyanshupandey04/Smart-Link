@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
   }
 
   if (originalUrl.isExpiry) {
-    let isexpiry = await isExpiry(originalUrl, shortId);
+    const isexpiry = await isExpiry(originalUrl, shortId);
     console.log("->isexpiry", isexpiry);
     if (isexpiry) {
       return NextResponse.json(isexpiry, { status: 400 });
