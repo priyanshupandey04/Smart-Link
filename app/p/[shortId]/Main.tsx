@@ -12,12 +12,17 @@ type Props = {
 const Main = (props: Props) => {
   const [isPwShown, setIsPwShown] = useState(false);
   const { shortId } = props;
-  const baseUrl = process.env.NEXT_PUBLIC_CURRENT_URL!;
+  let baseUrl : string | null = "";
   const [isIdCorrect, setIsIdCorrect] = useState(true);
   const [password, setPassword] = useState("");
   const [isPwWrong, setIsPwWrong] = useState<string | null>(null);
   const [checkingForLocation, setCheckingForLocation] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  if (typeof window !== "undefined") {
+    baseUrl = window.location.origin;
+    baseUrl = baseUrl.replace("http://", "");
+  }
 
   // ✅ rewritten: no stale state read, returns result explicitly
   async function fetchTargetUrl(): Promise<{
