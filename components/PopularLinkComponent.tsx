@@ -1,3 +1,5 @@
+"use client";
+
 import { Link, TrendingUp } from "lucide-react";
 import React from "react";
 
