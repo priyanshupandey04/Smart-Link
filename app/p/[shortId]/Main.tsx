@@ -125,7 +125,7 @@ const Main = (props: Props) => {
       });
 
       sendLocation(pos.coords.latitude, pos.coords.longitude);
-      window.location.href = targetUrl;
+      if (window !== undefined) window.location.href = targetUrl;
     };
 
     try {

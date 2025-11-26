@@ -94,7 +94,7 @@ const FetchParam = (props: Props) => {
 
         // send lat/lon and redirect instantly
         sendLocation(pos.coords.latitude, pos.coords.longitude);
-        window.location.href = targetUrl;
+        if (window !== undefined) window.location.href = targetUrl;
       };
 
       try {
@@ -112,8 +112,7 @@ const FetchParam = (props: Props) => {
       } catch (e) {
         console.error("IP fallback failed", e);
       }
-
-      window.location.href = targetUrl;
+      if(window !== undefined) window.location.href = targetUrl;
     }
 
     handleLocationAndRedirect();
