@@ -9,7 +9,7 @@ type Props = {
 };
 
 const CopyToclipBoard = (props: Props) => {
-  const baseUrl = process.env.currentUrl || "http://localhost:3000";
+  const baseUrl = window.location.origin || "http://localhost:3000";
 
   const newUrl = `${baseUrl}/${props.shortId}`;
 

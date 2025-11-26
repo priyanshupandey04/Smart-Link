@@ -8,7 +8,7 @@ type Props = {
 };
 
 const PopularLinkComponent = (props: Props) => {
-  let baseUrl = process.env.currentUrl || "http://localhost:3000";
+  let baseUrl = window.location.origin;
   baseUrl = baseUrl.replace("http://", "");
 
   return (
