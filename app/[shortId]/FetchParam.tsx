@@ -1,6 +1,5 @@
 "use client";
 
-import { encryptedPassword } from "@/lib/utils";
 import { redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -10,9 +9,18 @@ type Props = {
 
 const FetchParam = (props: Props) => {
   const { shortId } = props;
-  const baseUrl = process.env.NEXT_PUBLIC_CURRENT_URL!;
+  const [baseUrl, setBaseUrl] = useState<string | null>(null);
   const [isIdCorrect, setIsIdCorrect] = useState(true);
   const [checkingForLocation, setCheckingForLocation] = useState(false);
+
+  useEffect(() => {
+    // only run on client
+    if (typeof window !== "undefined") {
+      let baseUrl = window.location.origin;
+      baseUrl = baseUrl.replace("http://", "");
+      setBaseUrl(baseUrl);
+    }
+  }, []);
 
   useEffect(() => {
     async function fetchTargetUrl() {
@@ -112,7 +120,7 @@ const FetchParam = (props: Props) => {
       } catch (e) {
         console.error("IP fallback failed", e);
       }
-      if(window !== undefined) window.location.href = targetUrl;
+      if (window !== undefined) window.location.href = targetUrl;
     }
 
     handleLocationAndRedirect();
