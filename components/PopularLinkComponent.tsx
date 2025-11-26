@@ -15,11 +15,12 @@ const PopularLinkComponent = (props: Props) => {
   useEffect(() => {
     // only run on client
     if (typeof window !== "undefined") {
-      setBaseUrl(window.location.origin);
+      let baseUrl = window.location.origin;
+      baseUrl = baseUrl.replace("http://", "");
+      setBaseUrl(baseUrl);
     }
   }, []);
   // baseUrl = baseUrl.replace("http://", "");
-  setBaseUrl((prev) => prev?.replace("http://", "") || null);
 
   return (
     <div className="py-12  h-20 dark:bg-black bg-white rounded-2xl flex items-center justify-between group hover:scale-105 transition-transform duration-200 cursor-pointer glow ">
