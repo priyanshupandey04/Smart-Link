@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model shortIdWithSlug {
+  id         Int       @id @default(autoincrement())
+  slug       String    @unique
+  correctUrl String
+  expiry     DateTime? @default(now())
+  password   String?
+  isPassword Boolean?  @default(false)
+  isExpiry   Boolean?  @default(false)
+
+  geoLocations geoLocation[] @relation("WithSlugLocations")
+  user         user?         @relation(fields: [userId], references: [id])
+  userId       Int?
+}
+
+model shortIdWithoutSlug {
+  id         Int       @id @default(autoincrement())
+  correctUrl String
+  expiry     DateTime? @default(now())
+  password   String?
+  isPassword Boolean?  @default(false)
+  isExpiry   Boolean?  @default(false)
+
+  geoLocations geoLocation[] @relation("WithoutSlugLocations")
+  user         user?         @relation(fields: [userId], references: [id])
+  userId       Int?
+}
+
+model geoLocation {
+  id        Int       @id @default(autoincrement())
+  latitude  Float
+  longitude Float
+  address   String
+  createdAt DateTime? @default(now())
+
+  shortIdWithSlugId    Int?
+  shortIdWithoutSlugId Int?
+
+  ShortIdWithSlug    shortIdWithSlug?    @relation("WithSlugLocations", fields: [shortIdWithSlugId], references: [id], onDelete: Cascade)
+  ShortIdWithoutSlug shortIdWithoutSlug? @relation("WithoutSlugLocations", fields: [shortIdWithoutSlugId], references: [id], onDelete: Cascade)
+}
+
+model user {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  shortIdWithSlugs    shortIdWithSlug[]
+  shortIdWithoutSlugs shortIdWithoutSlug[]
+}
