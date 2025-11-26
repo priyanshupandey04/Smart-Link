@@ -4,9 +4,8 @@ import Main from "./Main";
 import PopularLinks from "./PopularLinks";
 import { Sparkles, Zap } from "lucide-react";
 
-type Props = {};
 
-const Hero = (props: Props) => {
+const Hero = () => {
   return (
     <div className="flex flex-col items-center  pb-20">
       

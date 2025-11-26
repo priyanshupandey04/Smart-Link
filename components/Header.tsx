@@ -5,9 +5,7 @@ import { Link, Sparkles, Sun } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import { useRouter } from "next/navigation";
 
-type Props = {};
-
-const Header = (props: Props) => {
+const Header = () => {
   const router = useRouter();
 
   return (

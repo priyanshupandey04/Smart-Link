@@ -2,9 +2,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import React from "react";
 
-type Props = {};
-
-const Page = (props: Props) => {
+const Page = () => {
   return (
     <div className="dark:bg-[#0a0f1a] bg-amber-50  w-screen relative pt-[0.1px] ">
       <div

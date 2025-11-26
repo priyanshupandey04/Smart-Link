@@ -4,9 +4,7 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import React, { useState } from "react";
 
-type Props = {};
-
-const ThemeToggle = (props: Props) => {
+const ThemeToggle = () => {
   const [isHovered, setIsHovered] = useState(false);
   const { theme, setTheme } = useTheme();
   return (

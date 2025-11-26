@@ -13,9 +13,8 @@ import React from "react";
 import PopularLinkComponent from "./PopularLinkComponent";
 import FeaturesComponent from "./FeaturesComponent";
 
-type Props = {};
 
-const PopularLinks = (props: Props) => {
+const PopularLinks = () => {
   return (
     <div className="mt-20 w-[90%] flex flex-col items-center justify-center gap-4">
       <div className="flex items-center gap-4  w-[100%] sm:w-[30%]">
